@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--id - Имя Bean -->
+    <!--class - Полный путь к классу -->
+    <bean id="notificationService"
+          class="com.training.service.NotificationService"/>
+
+    <!--<constructor-arg> - Внедрение через конструктор -->
+    <bean id="courseService"
+          class="com.training.service.CourseService">
+        <constructor-arg ref="notificationService"/>
+    </bean>
+
+    <!--property - Внедрение через setter -->
+    <bean id="studentService"
+          class="com.training.service.StudentService">
+        <property name="courseService" ref="courseService"/>
+    </bean>
+</beans>
+
+        <!--applicationContext.xml — это конфигурационный файл (инструкция для Spring Container) Spring,
+        в котором описывается:
+                - какие объекты (Beans) нужно создать,
+                - как их связать,
+                - какие зависимости внедрить,
+                - как Spring должен управлять приложением.
+
+        Spring читает XML и понимает: “Какие классы создать и как их соединить.”
+        ==========================
+        <bean id="notificationService"
+              class="org.example.service.NotificationService"/>
+
+        Что делает Spring:
+        - находит класс,
+        - создает объект,
+        - сохраняет его в контейнере.
+        =========================
+        <bean id="courseService"
+              class="org.example.service.CourseService">
+            <constructor-arg ref="notificationService"/>
+        </bean>
+
+        Что происходит:
+        Spring:
+        - создает NotificationService,
+        - передает его в конструктор CourseService,
+        - сохраняет CourseService.
+        ==========================
+        <bean id="studentService"
+              class="org.example.service.StudentService">
+            <property name="courseService" ref="courseService"/>
+        </bean>
+
+        Spring:
+        - создает StudentService,
+        - вызывает setter,
+        - внедряет CourseService.
+        -->
